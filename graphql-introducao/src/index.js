@@ -2,6 +2,9 @@ import { createServer } from "@graphql-yoga/node";
 
 const typeDefs = `
     type Query {
+        adicionar (numeros: [Float!]!): Float!
+        notas: [Int!]!
+        bemVindo (nome: String): String!
         effectiveJava: Livro!
     },
     type Livro {
@@ -15,6 +18,15 @@ const typeDefs = `
 
 const resolvers = {
     Query: {
+        adicionar(parent, args, ctx, info) {
+            return args.numeros.length === 0 ? 0 : args.numeros.reduce((ac, atual) => {return ac + atual;});
+        },
+        notas(parent, args, ctx, info) {
+            return [10,2,7,7,8];
+        },
+        bemVindo(parent, args, ctx, info) {
+            return `Bem vindo ${args.nome ? args.nome : 'visitante'}`;
+        },
         effectiveJava() {
             return {
                 id: '123456',
